@@ -14,16 +14,17 @@ module Devise
           belongs_to :user
           belongs_to :client
 
+          attr_accessible :user, :client
+
           after_initialize :init_token, :on => :create, :unless => :token?
           after_initialize :init_expires_at, :on => :create, :unless => :expires_at?
           validates :expires_at, :presence => true
           validates :client, :presence => true
           validates :token, :presence => true, :uniqueness => true
 
-          scope :not_expired, lambda {
+          default_scope lambda {
             where(self.arel_table[:expires_at].gteq(Time.now.utc))
           }
-
           default_scope lambda {
             where(self.arel_table[:expires_at].gteq(Time.now.utc))
           }

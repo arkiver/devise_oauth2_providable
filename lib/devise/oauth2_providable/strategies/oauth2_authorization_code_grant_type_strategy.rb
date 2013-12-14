@@ -12,7 +12,7 @@ module Devise
           oauth_error! :invalid_client, 'invalid client credentials'
       elsif (code = client.authorization_codes.find_by_token(params[:code])) && (client.redirect_uri == params[:redirect_uri])
           success! code.user
-        elsif !halted?
+        else
           oauth_error! :invalid_grant, 'invalid authorization code request'
         end
       end
