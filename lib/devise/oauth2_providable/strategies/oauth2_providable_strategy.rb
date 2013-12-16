@@ -14,7 +14,7 @@ module Devise
         resource = token ? token.user : nil
         if validate(resource)
           success! resource
-        else
+        elsif !halted?
           fail(:invalid_token)
         end
       end

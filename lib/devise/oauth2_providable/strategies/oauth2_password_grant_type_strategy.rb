@@ -7,13 +7,13 @@ module Devise
         'password'
       end
 
-      def authenticate_grant_type(client)
+      def authenticate!
         resource = mapping.to.find_for_authentication(mapping.to.authentication_keys.first => params[:username])
         if client.nil?
           oauth_error! :invalid_client, 'invalid client credentials'
         elsif validate(resource) { resource.valid_password?(params[:password]) }
           success! resource
-        else
+        elsif !halted?
           oauth_error! :invalid_grant, 'invalid password authentication request'
         end
       end

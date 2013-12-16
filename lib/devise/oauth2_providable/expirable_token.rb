@@ -22,9 +22,10 @@ module Devise
           validates :client, :presence => true
           validates :token, :presence => true, :uniqueness => true
 
-          default_scope lambda {
+          scope :not_expired, lambda {
             where(self.arel_table[:expires_at].gteq(Time.now.utc))
           }
+
           default_scope lambda {
             where(self.arel_table[:expires_at].gteq(Time.now.utc))
           }

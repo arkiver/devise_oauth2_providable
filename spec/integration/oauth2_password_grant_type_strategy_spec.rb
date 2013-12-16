@@ -26,7 +26,7 @@ describe Devise::Strategies::Oauth2PasswordGrantTypeStrategy do
           response.body.should match_json(expected)
         end
       end
-      context 'with valid params and client id/secret in basic auth header' do
+      context 'with invalid params' do
         with :client
         before do
           @user = User.create! :email => 'ryan@socialcast.com', :password => 'test'
